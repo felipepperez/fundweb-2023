@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <script>
+        function atualizarNomeArquivo(event) {
+            document.getElementById('imagem').src = URL.createObjectURL(event.target.files[0]);
+        }
+        function atualizarNomeArquivo2(caminho) {
+            document.getElementById('imagem2').src = caminho;
+        }
+        function validar() {
+            if (document.getElementById('nome').value == "") {
+                alert('O campo nome está vazio!');
+                document.getElementById('nome').focus();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <labe>Nome:
+            <input id="nome" value="Felipe Pereira Perez">
+        </labe>
+        <br>
+        <fieldset>
+            <legend>Estado Civil: </legend>
+            <label>
+                <input type="radio" name="est_civ" value="Casado"> Casado
+            </label>
+            <label>
+                <input type="radio" name="est_civ" value="Solteiro"> Solteiro
+            </label>
+            <label>
+                <input type="radio" name="est_civ" value="Divorciado"> Divorciado
+            </label>
+        </fieldset>
+        <br>
+        <label for="idade">Idade:</label>
+        <input id="idade" type="number" step="1" min="0" max="65" value="18">
+        <br>
+        <label for="celular">Celular:</label>
+        <input id="celular" type="tel" required placeholder="(XX)XXXX-XXXX" pattern="^\(\d{2}\)\d{4}-\d{4}$"
+            value="(99)9999-9999">
+        <br>
+        <label for="cpf">CPF:</label>
+        <input id="cpf" type="text" required pattern="\d{3}.\d{3}.\d{3}-\d{2}" value="999.999.999-99">
+        <br>
+        <label for="email">Email:</label>
+        <input id="email" type="email" required value="uuu@yyy.ii">
+        <br>
+        <label for="volume">Volume:</label>
+        <input id="volume" type="range" min="0" max="20" step="2">
+        <br>
+        <label for="datanasc">Data Nascimento:</label>
+        <input id="datanasc" type="date">
+        <br>
+        <label for="horadeentrega">Hora de Entrega:</label>
+        <input id="horadeentrega" type="time" min="19:00" max="23:30" step="300" value="21:35">
+        <br>
+        <label for="foto">Imagem:</label>
+        <input id="foto" type="file" accept="image/*" onchange="atualizarNomeArquivo(event)">
+        <br>
+        <label for="foto2">Nova Imagem:</label>
+        <input id="foto2" type="text" onchange="atualizarNomeArquivo2(this.value)">
+        <br>
+        <img src="https://i.pinimg.com/originals/d3/e9/20/d3e920eda23e9803319f88d138c2541d.png" alt="Imagem" width="200"
+            id="imagem">
+        <img src="https://i.pinimg.com/originals/d3/e9/20/d3e920eda23e9803319f88d138c2541d.png" alt="Imagem" width="200"
+            id="imagem2">
+        <br>
+        <input type="submit"> <input type="reset"> <input type="button" value="Validar Nome" onclick="validar();">
+        <br>
+        <input type="image" width="50px" src="https://gifs.eco.br/wp-content/uploads/2022/07/gifs-de-botao-3.gif"
+            alt="botão">
+    </form>
+</body>
+
+</html>

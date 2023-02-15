@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calcular() {
+            let dtNasc = new Date(document.getElementById('dtNasc').value);
+            let dtAtual = new Date();
+
+            let idade = dtAtual.getFullYear() - dtNasc.getFullYear();
+
+            if (dtAtual.getMonth() < dtNasc.getMonth()) {
+                idade--;
+            } else if (dtAtual.getMonth() == dtNasc.getMonth()){
+                if(dtAtual.getDate() < dtNasc.getDate()){
+                    idade--;
+                }
+            }
+
+            document.getElementById('idade').value = idade;
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit="return false;" oninput="calcular()">
+        <label for="dtNasc">Data de Nascimento:</label>
+        <input type="date" id="dtNasc">
+        <br>
+        <output id="idade"></output>
+    </form>
+
+    <form>
+        <label for="car">Carro: </label>
+        <select id="car" name="carros">
+            <optgroup label="1 Esportivos"></optgroup>
+            <option value="1.1">Ferrari</option>
+            <option value="1.2">Porche</option>
+            <option value="1.3">Lamborghini</option>
+            <optgroup label="2 Popular"></optgroup>
+            <option value="2.1">Corsa</option>
+            <option value="2.2" selected>Palio</option>
+            <option value="2.3">Uno</option>
+            <option value="2.4">Gol</option>
+        </select>
+    </form>
+</body>
+
+</html>
