@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globais</title>
+    <script>
+        function estadoElemento(){
+            let submenu = document.getElementById('submenu');
+            submenu.hidden = !submenu.hidden;
+
+        }
+    </script>
+</head>
+<body>
+    <input type="text" accesskey="q" tabindex="1" title="Digite um texto">
+    <input type="text" accesskey="w" tabindex="5">
+    <input type="text" accesskey="t" tabindex="3">
+
+    <br><br><br>
+
+    <input type="text" dir="ltr" value="Felipe" tabindex="2">
+    <input type="text" dir="rtl" title="Digite um valor" value="1,45" tabindex="4">
+
+    <br><br><br>
+
+    <p style="background-color: navy; color: white; text-align: justify;" contenteditable="true">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et consequat purus. Duis hendrerit fermentum ipsum, a congue justo dictum a. Nulla a lacus leo. Aenean dignissim, ipsum et convallis pretium, tortor nibh iaculis arcu, at tincidunt arcu sapien id tortor. Praesent sagittis sem non purus placerat venenatis. Pellentesque hendrerit lorem at diam condimentum, fringilla pharetra nibh aliquet. Phasellus eu urna consectetur, fermentum ipsum eget, hendrerit lacus. Phasellus placerat aliquet libero, ut lobortis mi fermentum vel. Pellentesque varius, purus ut rhoncus ornare, est tellus porta ligula, eget varius metus orci non nisl. In porta bibendum eros dapibus mattis. Nulla sit amet suscipit neque. Curabitur quis faucibus tellus. Duis bibendum vel mauris ut facilisis. Curabitur at consectetur metus. Aenean rutrum rhoncus lacinia.
+    </p>
+
+    <br><br><br>
+
+    <div id="menu">
+        <a href="#" onclick="estadoElemento()">Multimidia</a>
+    </div>
+    <div id="submenu" hidden>
+        <ul>
+            <li>Músicas</li>
+            <li>Vídeos</li>
+            <li>Animações</li>
+        </ul>
+    </div>
+</body>
+</html>
