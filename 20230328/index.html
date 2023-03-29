@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const imcInfo = [
+            { inicio: 0, fim: 18.5, classificacao: 'magreza', grau: '0' },
+            { inicio: 18.5, fim: 25, classificacao: 'normal', grau: '0' },
+            { inicio: 25, fim: 30, classificacao: 'sobrepeso', grau: 'I' },
+            { inicio: 30, fim: 40, classificacao: 'obesidade', grau: 'II' },
+            { inicio: 40, fim: Infinity, classificacao: 'obesidade grave', grau: 'II' }
+        ];
+
+        window.addEventListener('load', () => {
+            document.getElementById('formulario').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const peso = document.getElementById('peso').value;
+                const altura = document.getElementById('altura').value;
+
+                const titulos = document.getElementById('resultado').getElementsByClassName('titulo');
+
+                for (i = titulos.length - 1; i >= 0; i--) {
+                    titulos[i].remove();
+                }
+
+                if (peso && altura) {
+                    const imc = peso / (altura * altura);
+                    let result;
+                    for (info of imcInfo) {
+                        if (imc >= info.inicio && imc < info.fim) {
+                            result = info;
+                            result.imc = imc.toFixed(2);
+                        }
+                    }
+                    let element = document.createElement('h2');
+                    element.classList.add('titulo');
+                    element.append('IMC: ' + result.imc);
+                    document.getElementById('resultado').appendChild(element);
+
+                    element = document.createElement('h3');
+                    element.classList.add('titulo');
+                    element.append('Grau: ' + result.grau);
+                    document.getElementById('resultado').appendChild(element);
+
+                    element = document.createElement('h3');
+                    element.classList.add('titulo');
+                    element.append('Classificação: ' + result.classificacao);
+                    document.getElementById('resultado').appendChild(element);
+                }else{
+                    let element = document.createElement('h2');
+                    element.classList.add('titulo');
+                    element.append('Valores inválidos');
+                    document.getElementById('resultado').appendChild(element);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <form id="formulario">
+        <br>
+        <label for="peso">Peso:</label>
+        <input type="number" step="0.01" id="peso" value="95">
+        <br>
+        <label for="altura">Altura:</label>
+        <input type="number" step="0.01" id="altura" value="1.75">
+        <br>
+        <input type="submit">
+    </form>
+
+    <div id="resultado">
+
+    </div>
+</body>
+
+</html>
