@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', () => {
+            let bd = [
+                { id: '5c24e257-0244-4be5-b5f7-c00d1b6be5ef', nome: 'Felipe1', cpf: '000.000.000-00', telefone: '(67) 9 9999.9999' },
+                { id: '943c8f0a-c04e-48e5-bc04-2983708f6ab1', nome: 'Felipe2', cpf: '000.000.000-00', telefone: '(67) 9 9999.9999' },
+                { id: '63ca6ae4-4f56-4025-8ae6-56caf6296c5e', nome: 'Felipe3', cpf: '000.000.000-00', telefone: '(67) 9 9999.9999' }
+            ];
+
+            document.getElementById('formulario').addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const nome = document.getElementById('nome').value;
+                const cpf = document.getElementById('cpf').value;
+                const telefone = document.getElementById('telefone').value;
+
+                if (nome && cpf && telefone) {
+                    const btSubmit = document.getElementById('btSubmit');
+                    if (btSubmit.dataset.type == 'add') {
+                        const id = uuidv4();
+                        bd.push({ id, nome, cpf, telefone });
+                    } else if (btSubmit.dataset.type == 'update') {
+                        const id = btSubmit.dataset.id;
+                        bd.map((el) => {
+                            if (el.id == id) {
+                                el.nome = nome;
+                                el.cpf = cpf;
+                                el.telefone = telefone;
+                            }
+                        });
+                        resetaCampos();
+                    }
+                    preencheTabela();
+                }
+
+
+            });
+
+            document.getElementById('btReseta').addEventListener('click', resetaCampos);
+
+            function resetaCampos() {
+                document.getElementById('nome').value = '';
+                document.getElementById('cpf').value = '';
+                document.getElementById('telefone').value = '';
+
+                const btSubmit = document.getElementById('btSubmit');
+                btSubmit.value = 'Adicionar';
+                btSubmit.dataset.type = 'add';
+                delete btSubmit.dataset.id;
+            }
+
+            preencheTabela();
+
+            function preencheTabela() {
+                let table = document.getElementById('usuarios');
+                console.log('Limpa tabela');
+                let rows = table.getElementsByTagName('tr');
+                for (i = rows.length - 1; i >= 0; i--) {
+                    rows[i].remove();
+                }
+                console.log('Preenche tabela');
+                for (row of bd) {
+                    let newRow = document.createElement('tr');
+                    let newCollumn = document.createElement('td');
+                    newCollumn.innerHTML = row.nome;
+                    newRow.appendChild(newCollumn);
+                    newCollumn = document.createElement('td');
+                    newCollumn.innerHTML = row.cpf;
+                    newRow.appendChild(newCollumn);
+                    newCollumn = document.createElement('td');
+                    newCollumn.innerHTML = row.telefone;
+                    newRow.appendChild(newCollumn);
+                    newCollumn = document.createElement('td');
+                    newCollumn.innerHTML = 'Editar';
+                    newCollumn.dataset.id = row.id;
+                    newCollumn.addEventListener('click', function () {
+                        const id = this.dataset.id;
+                        const btSubmit = document.getElementById('btSubmit');
+                        btSubmit.value = 'Atualizar';
+                        btSubmit.dataset.type = 'update';
+                        btSubmit.dataset.id = id;
+
+                        const colluns = this.parentNode.getElementsByTagName('td');
+
+                        document.getElementById('nome').value = colluns[0].innerHTML;
+                        document.getElementById('cpf').value = colluns[1].innerHTML;
+                        document.getElementById('telefone').value = colluns[2].innerHTML;
+                    });
+                    newRow.appendChild(newCollumn);
+                    newCollumn = document.createElement('td');
+                    newCollumn.innerHTML = 'Excluir';
+                    newCollumn.dataset.id = row.id;
+                    newCollumn.addEventListener('click', function () {
+                        const id = this.dataset.id;
+                        if (confirm('Deseja mesmo excluir o usuário')) {
+                            console.log('excluir', id);
+                            let newBD = bd.filter(function (el) {
+                                return el.id !== id;
+                            });
+                            bd = newBD;
+                            preencheTabela();
+                        }
+                    });
+                    newRow.appendChild(newCollumn);
+                    table.appendChild(newRow);
+                }
+            }
+
+            function uuidv4() {
+                return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                );
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <h1>Usuários</h1>
+        <form id="formulario">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" value="testeNome">
+            <br><br>
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" value="testeCPF">
+            <br><br>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" value="testeTelefone">
+            <br><br>
+            <input id="btSubmit" type="submit" value="Adicionar" data-type="add">
+            <input id="btReseta" type="button" value="Resetar">
+            <br><br><br><br>
+        </form>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <td>Nome:</td>
+                <td>CPF:</td>
+                <td>Telefone:</td>
+                <td></td>
+                <td></td>
+            </thead>
+            <tbody id="usuarios">
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
