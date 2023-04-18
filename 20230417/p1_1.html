@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', () => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function () {
+                if (this.status !== 200) {
+                    alert('Erro na requisição');
+                } else {
+                    const frutas = JSON.parse(this.responseText);
+                    //console.log(frutas);
+
+                    let table = document.getElementById('frutas');
+                    console.log('Limpa tabela');
+                    let rows = table.getElementsByTagName('tr');
+                    for (i = rows.length - 1; i >= 0; i--) {
+                        rows[i].remove();
+                    }
+
+                    for (row of frutas) {
+                        let newRow = document.createElement('tr');
+                        newRow.dataset.name = row.name;
+                        newRow.dataset.calorias = row.nutritions.calories;
+                        newRow.dataset.gorduras = row.nutritions.fat;
+                        newRow.dataset.acucar = row.nutritions.sugar;
+                        newRow.dataset.carboidrato = row.nutritions.carbohydrates;
+                        newRow.dataset.proteina = row.nutritions.protein;
+                        let newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.name;
+                        newRow.appendChild(newCollumn);
+                        newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.family;
+                        newRow.appendChild(newCollumn);
+                        newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.order;
+                        newRow.appendChild(newCollumn);
+                        newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.genus;
+                        newRow.appendChild(newCollumn);
+
+                        newRow.addEventListener('click',function(){
+                            document.getElementById('nome').value = this.dataset.name;
+                            document.getElementById('calorias').value = this.dataset.calorias;
+                            document.getElementById('gorduras').value = this.dataset.gorduras;
+                            document.getElementById('acucar').value = this.dataset.acucar;
+                            document.getElementById('carboidrato').value = this.dataset.carboidrato;
+                            document.getElementById('proteina').value = this.dataset.proteina;
+                        });
+
+                        table.appendChild(newRow);
+                    }
+                }
+            }
+            xhttp.open('GET', 'frutas.json', true);
+            xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8")
+            xhttp.send();
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" disabled>
+    </div>
+    <div>
+        <label for="calorias">Calorias:</label>
+        <input type="text" id="calorias" disabled>
+    </div>
+    <div>
+        <label for="gorduras">Gorduras:</label>
+        <input type="text" id="gorduras" disabled>
+    </div>
+    <div>
+        <label for="acucar">Açucar:</label>
+        <input type="text" id="acucar" disabled>
+    </div>
+    <div>
+        <label for="carboidrato">Carboidrato:</label>
+        <input type="text" id="carboidrato" disabled>
+    </div>
+    <div>
+        <label for="proteina">Proteina:</label>
+        <input type="text" id="proteina" disabled>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <td>Nome:</td>
+                <td>Família:</td>
+                <td>Ordem:</td>
+                <td>Gênero:</td>
+            </thead>
+            <tbody id="frutas">
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

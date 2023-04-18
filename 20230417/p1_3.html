@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', () => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function () {
+                if (this.status !== 200) {
+                    alert('Erro na requisição');
+                } else {
+                    const nobel = JSON.parse(this.responseText).nobelPrizes;
+                    console.log(nobel);
+
+                    let table = document.getElementById('nobel');
+                    console.log('Limpa tabela');
+                    let rows = table.getElementsByTagName('tr');
+                    for (i = rows.length - 1; i >= 0; i--) {
+                        rows[i].remove();
+                    }
+
+                    for (row of nobel) {
+                        let name;
+                        if (row.laureates[0].fullName)
+                            name = row.laureates[0].fullName.en;
+                        else if (row.laureates[0].orgName)
+                            name = row.laureates[0].orgName.en;
+
+                        let newRow = document.createElement('tr');
+                        newRow.dataset.name = name;
+                        newRow.dataset.categoria = row.category.en;
+                        newRow.dataset.motivo = row.laureates[0].motivation.en;
+                        let newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = name;
+                        newRow.appendChild(newCollumn);
+                        newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.category.en;
+                        newRow.appendChild(newCollumn);
+                        newCollumn = document.createElement('td');
+                        newCollumn.innerHTML = row.awardYear;
+                        newRow.appendChild(newCollumn);
+
+                        newRow.addEventListener('click', function () {
+                            document.getElementById('nome').value = this.dataset.name;
+                            document.getElementById('categoria').value = this.dataset.categoria;
+                            document.getElementById('motivo').value = this.dataset.motivo;
+                        });
+
+                        table.appendChild(newRow);
+                    }
+                }
+            }
+            xhttp.open('GET', 'nobel.json', true);
+            xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8")
+            xhttp.send();
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" disabled>
+    </div>
+    <div>
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" disabled>
+    </div>
+    <div>
+        <label for="motivo">Motivo:</label>
+        <br>
+        <textarea id="motivo" disabled rows="4" style="width:100%"></textarea>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <td>Nome:</td>
+                <td>Categoria:</td>
+                <td>Ano:</td>
+            </thead>
+            <tbody id="nobel">
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
