@@ -1,0 +1,36 @@
+body{
+    background-color: plum;
+}
+
+h1, h2{
+    text-align: center;
+    color: blueviolet;
+}
+
+p{
+    text-align: justify;
+    color: white;
+}
+
+#secondP{
+    font-size: x-large;
+    border-left: 6px solid #ccc!important;
+    border-style: dashed;
+}
+
+p.titulo{
+    font-weight: bolder;
+}
+
+table{
+    font-size: x-large;
+    border-color: royalblue;
+}
+
+table > tbody > tr {
+    background-color: aquamarine;
+}
+
+table tr {
+    color: blue;
+}
